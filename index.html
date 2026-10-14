@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+</head>
+<body>
+<header class="flex min-h-[200px] items-center justify-between gap-4 rounded-[40px] border-2 border-[#383b45] bg-[#030a14] px-5 py-6 sm:min-h-[310px] sm:rounded-[55px] sm:px-7">
+    <div class="min-w-0">
+        <h1 class="whitespace-nowrap text-[clamp(1.8rem,6vw,4rem)] leading-tight font-bold tracking-tight text-[#f6f5f8]">
+            Todo Done
+        </h1>
+
+        <p id="todayDate" class="mt-6 text-lg font-bold tracking-wide text-white sm:mt-9 sm:text-2xl">
+            12.09.2025
+        </p>
+    </div>
+    <div id="progressCount"
+         class="flex aspect-square w-[clamp(100px,27vw,195px)] shrink-0 items-center justify-center rounded-full bg-white text-[clamp(2rem,6vw,4rem)] font-extrabold tracking-tight text-black">
+        5/8
+    </div>
+</header>
+<form id="taskForm" class="mt-7 flex items-center gap-3 sm:gap-[18px]">
+    <input
+        id="taskInput"
+        type="text"
+        placeholder="input a new task"
+        maxlength="180"
+        autocomplete="off"
+        class="h-[59px] min-w-0 flex-1 rounded-xl border-2 border-[#252528] bg-[#111112] px-4 text-base text-white outline-none transition placeholder:text-[#343438] focus:border-[#626b87] sm:h-[67px]"
+    >
+    <button
+        type="submit"
+        aria-label="Add task"
+        class="flex h-[49px] w-[49px] shrink-0 items-center justify-center rounded-full bg-white text-black transition hover:scale-105 hover:bg-gray-200 active:scale-95 sm:h-[54px] sm:w-[54px]"
+    >
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            class="h-8 w-8"
+            aria-hidden="true"
+        >
+            <path
+                d="M12 4v16M4 12h16"
+                stroke="currentColor"
+                stroke-width="2.6"
+                stroke-linecap="round"
+            />
+        </svg>
+    </button>
+
+</form>
+</body>
+</html>
