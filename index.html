@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Easy ToDo App</title>
-    <script src="https://cdn.tailwindcss.com"></script> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>ToDo App</title>
 </head>
-<body>
-    <header
+<body class="min-h-screen bg-[#0b0b0b] text-white antialiased">
+  <main class="mx-auto w-full max-w-md px-3 pb-16 pt-7 md:max-w-xl md:pt-14">
+     <header
   class="flex h-[170px] items-center justify-between rounded-[36px] border border-[#3a4150] bg-[#030a14] pl-[15px] pr-[11px] md:h-[190px] md:pl-6 md:pr-3"
 >
   <div class="mt-8">
@@ -25,7 +27,7 @@
     type="text"
     maxlength="120"
     autocomplete="off"
-    placeholder="inpute a new task"
+    placeholder="input a new task"
     class="h-9 min-w-0 flex-1 rounded-md border border-[#232323] bg-[#101010] px-3 text-sm text-white placeholder-[#3b3b3b] outline-none transition-colors focus:border-[#4a4a55]"
   />
   <button
@@ -39,5 +41,6 @@
     </svg>
   </button>
 </div>
+</main>
 </body>
 </html>
