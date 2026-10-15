@@ -1,0 +1,22 @@
+.menu-popup {
+  display: none;
+  position: absolute;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  z-index: 10;
+}
+.menu-popup.show { display: block; }
+.menu-popup button {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+.menu-popup button:hover { background: #f2f2f2; }
+.todo-item { position: relative; }
