@@ -1,235 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EasyTask Simple ToDo App</title>
+<head>
+    <meta charset="UTF-8">
+    <title>Easy ToDo App</title>
+    <script src="https://cdn.tailwindcss.com"></script> 
+</head>
+<body>
+    <header
+  class="flex h-[170px] items-center justify-between rounded-[36px] border border-[#3a4150] bg-[#030a14] pl-[15px] pr-[11px] md:h-[190px] md:pl-6 md:pr-3"
+>
+  <div class="mt-8">
+    <h1 class="text-[36px] font-bold leading-none tracking-tight text-[#f6f4ff] md:text-[42px]">Todo Done</h1>
+    <p id="date" class="mt-5 pl-1 text-lg font-semibold tracking-wide text-[#f6f4ff]">12.09.2025</p>
+  </div>
 
-    <!-- Tailwind CDN (no install needed for quick preview) -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <div class="flex h-[104px] w-[104px] shrink-0 items-center justify-center rounded-full bg-white md:h-[118px] md:w-[118px]">
+    <span id="counter" class="text-[36px] font-extrabold leading-none text-black md:text-[40px]">5/8</span>
+  </div>
+</header>
 
-    <!-- Tiny Tailwind config tweak to match Figma rounded feel -->
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              // Approximations of the Figma dark palette
-              ink: "#0B0B14",          // page background
-              panel: "#15172A",        // task rows
-              panel2: "#1B1E33",       // top header card
-              field: "#0E1020",        // input field bg
-              stroke: "#2A2D45",       // subtle borders on checked rows
-            },
-            borderRadius: {
-              "4xl": "2rem",
-            },
-            boxShadow: {
-              soft: "0 10px 30px rgba(0,0,0,0.35)",
-            },
-          },
-        },
-      };
-    </script>
-
-    <style>
-      /* Hide the native checkbox so we can render custom ones */
-      .task input[type="checkbox"] {
-        appearance: none;
-        -webkit-appearance: none;
-        width: 18px;
-        height: 18px;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        background: transparent;
-      }
-
-      /* Unchecked — soft border */
-      .task input[type="checkbox"]:not(:checked) {
-        border: 1.5px solid #6c7393;
-      }
-
-      /* Checked — coloured stroke + custom tick */
-      .task input[type="checkbox"]:checked {
-        border: 1.5px solid transparent;
-        background-color: transparent; /* colour set per tone */
-      }
-
-      .task.purple   input[type="checkbox"]:checked { border-color: #8b5cf6; }
-      .task.pink     input[type="checkbox"]:checked { border-color: #ec4899; }
-      .task.green    input[type="checkbox"]:checked { border-color: #22c55e; }
-      .task.yellow   input[type="checkbox"]:checked { border-color: #eab308; }
-      .task.blue     input[type="checkbox"]:checked { border-color: #3b82f6; }
-      .task.teal     input[type="checkbox"]:checked { border-color: #14b8a6; }
-      .task.rose     input[type="checkbox"]:checked { border-color: #f43f5e; }
-      .task.orange   input[type="checkbox"]:checked { border-color: #f97316; }
-
-      /* Custom tick using ::after */
-      .task input[type="checkbox"]:checked::after {
-        content: "";
-        position: absolute;
-        left: 4px;
-        top: 1px;
-        width: 6px;
-        height: 11px;
-        border: solid white;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-      }
-      .task input[type="checkbox"]:checked {
-        background-color: transparent; /* keep the tick visible on dark row */
-      }
-    </style>
-  </head>
-
-  <body class="bg-ink min-h-screen flex items-start justify-center font-sans antialiased">
-    <!-- DESKTOP: phone-sized container centred. On mobile it goes full-bleed. -->
-    <main
-      class="w-full max-w-[420px] sm:max-w-[440px] md:max-w-[460px]
-             bg-ink sm:bg-ink md:py-10 sm:py-6 px-4 sm:px-6 md:px-8
-             text-white"
-    >
-      <!-- Phone-style card shell -->
-      <div class="rounded-[2.5rem] sm:rounded-[2.5rem] bg-ink sm:shadow-soft sm:ring-1 sm:ring-white/5 overflow-hidden">
-
-        <!-- ============== HEADER CARD ============== -->
-        <header
-          class="bg-panel2 m-3 sm:m-4 rounded-3xl px-6 py-7 sm:px-7 sm:py-8
-                 flex items-center justify-between gap-4 relative"
-        >
-          <div class="flex flex-col">
-            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-              Todo Done
-            </h1>
-            <p class="mt-2 text-sm sm:text-base font-medium text-white/80">
-              12.09.2025
-            </p>
-          </div>
-
-          <!-- 5/8 progress badge (white circle, black text) -->
-          <div
-            class="shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white
-                   grid place-items-center shadow-soft"
-          >
-            <span class="text-2xl sm:text-3xl font-extrabold text-black leading-none">
-              5/8
-            </span>
-          </div>
-        </header>
-
-        <!-- ============== INPUT ROW ============== -->
-        <section class="mx-4 sm:mx-6 mb-4 flex items-center gap-3">
-          <div class="flex-1 relative">
-            <input
-              type="text"
-              placeholder="inpute a new task"
-              class="w-full bg-field ring-1 ring-white/10 rounded-full
-                     py-3 pl-5 pr-12 text-sm sm:text-base text-white
-                     placeholder-white/40 outline-none
-                     focus:ring-2 focus:ring-white/30 transition"
-            />
-          </div>
-          <button
-            type="button"
-            aria-label="Add task"
-            class="shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white
-                   grid place-items-center text-black text-2xl font-light
-                   active:scale-95 transition"
-          >
-            +
-          </button>
-        </section>
-
-        <!-- ============== TASK LIST ============== -->
-        <ul class="mx-3 sm:mx-4 mb-6 flex flex-col gap-3 sm:gap-4">
-
-          <!-- Row template — repeated 8 times with different tones/states -->
-          <!-- ROW 1 -->
-          <li class="task purple bg-panel rounded-2xl px-4 sm:px-5 py-3 sm:py-4
-                     flex items-center gap-3 sm:gap-4 border border-transparent has-[:checked]:border-stroke">
-            <label class="flex items-center gap-3 sm:gap-4 flex-1 cursor-pointer">
-              <input type="checkbox" checked />
-              <span class="font-semibold text-white text-sm sm:text-base">Text</span>
-            </label>
-            <button aria-label="Task menu" class="text-white/70 hover:text-white text-lg leading-none px-2">⋮</button>
-          </li>
-
-          <!-- ROW 2 -->
-          <li class="task pink bg-panel rounded-2xl px-4 sm:px-5 py-3 sm:py-4
-                     flex items-center gap-3 sm:gap-4 border border-transparent has-[:checked]:border-stroke">
-            <label class="flex items-center gap-3 sm:gap-4 flex-1 cursor-pointer">
-              <input type="checkbox" />
-              <span class="font-semibold text-white text-sm sm:text-base">Text</span>
-            </label>
-            <button aria-label="Task menu" class="text-white/70 hover:text-white text-lg leading-none px-2">⋮</button>
-          </li>
-
-          <!-- ROW 3 -->
-          <li class="task green bg-panel rounded-2xl px-4 sm:px-5 py-3 sm:py-4
-                     flex items-center gap-3 sm:gap-4 border border-transparent has-[:checked]:border-stroke">
-            <label class="flex items-center gap-3 sm:gap-4 flex-1 cursor-pointer">
-              <input type="checkbox" checked />
-              <span class="font-semibold text-white text-sm sm:text-base">Text</span>
-            </label>
-            <button aria-label="Task menu" class="text-white/70 hover:text-white text-lg leading-none px-2">⋮</button>
-          </li>
-
-          <!-- ROW 4 -->
-          <li class="task yellow bg-panel rounded-2xl px-4 sm:px-5 py-3 sm:py-4
-                     flex items-center gap-3 sm:gap-4 border border-transparent has-[:checked]:border-stroke">
-            <label class="flex items-center gap-3 sm:gap-4 flex-1 cursor-pointer">
-              <input type="checkbox" checked />
-              <span class="font-semibold text-white text-sm sm:text-base">Text</span>
-            </label>
-            <button aria-label="Task menu" class="text-white/70 hover:text-white text-lg leading-none px-2">⋮</button>
-          </li>
-
-          <!-- ROW 5 -->
-          <li class="task blue bg-panel rounded-2xl px-4 sm:px-5 py-3 sm:py-4
-                     flex items-center gap-3 sm:gap-4 border border-transparent has-[:checked]:border-stroke">
-            <label class="flex items-center gap-3 sm:gap-4 flex-1 cursor-pointer">
-              <input type="checkbox" />
-              <span class="font-semibold text-white text-sm sm:text-base">Text</span>
-            </label>
-            <button aria-label="Task menu" class="text-white/70 hover:text-white text-lg leading-none px-2">⋮</button>
-          </li>
-
-          <!-- ROW 6 -->
-          <li class="task teal bg-panel rounded-2xl px-4 sm:px-5 py-3 sm:py-4
-                     flex items-center gap-3 sm:gap-4 border border-transparent has-[:checked]:border-stroke">
-            <label class="flex items-center gap-3 sm:gap-4 flex-1 cursor-pointer">
-              <input type="checkbox" checked />
-              <span class="font-semibold text-white text-sm sm:text-base">Text</span>
-            </label>
-            <button aria-label="Task menu" class="text-white/70 hover:text-white text-lg leading-none px-2">⋮</button>
-          </li>
-
-          <!-- ROW 7 -->
-          <li class="task rose bg-panel rounded-2xl px-4 sm:px-5 py-3 sm:py-4
-                     flex items-center gap-3 sm:gap-4 border border-transparent has-[:checked]:border-stroke">
-            <label class="flex items-center gap-3 sm:gap-4 flex-1 cursor-pointer">
-              <input type="checkbox" />
-              <span class="font-semibold text-white text-sm sm:text-base">Text</span>
-            </label>
-            <button aria-label="Task menu" class="text-white/70 hover:text-white text-lg leading-none px-2">⋮</button>
-          </li>
-
-          <!-- ROW 8 -->
-          <li class="task orange bg-panel rounded-2xl px-4 sm:px-5 py-3 sm:py-4
-                     flex items-center gap-3 sm:gap-4 border border-transparent has-[:checked]:border-stroke">
-            <label class="flex items-center gap-3 sm:gap-4 flex-1 cursor-pointer">
-              <input type="checkbox" checked />
-              <span class="font-semibold text-white text-sm sm:text-base">Text</span>
-            </label>
-            <button aria-label="Task menu" class="text-white/70 hover:text-white text-lg leading-none px-2">⋮</button>
-          </li>
-
-        </ul>
-
-        <!-- Little footer space matching Figma bottom padding -->
-        <div class="h-6 sm:h-10"></div>
-      </div>
-    </main>
-  </body>
+<div class="mt-[18px] flex items-center gap-3 px-1">
+  <input
+    id="task-input"
+    type="text"
+    maxlength="120"
+    autocomplete="off"
+    placeholder="inpute a new task"
+    class="h-9 min-w-0 flex-1 rounded-md border border-[#232323] bg-[#101010] px-3 text-sm text-white placeholder-[#3b3b3b] outline-none transition-colors focus:border-[#4a4a55]"
+  />
+  <button
+    id="add-btn"
+    type="button"
+    aria-label="Add task"
+    class="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full bg-white text-black transition-transform active:scale-90"
+  >
+    <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M12 5v14M5 12h14" />
+    </svg>
+  </button>
+</div>
+</body>
 </html>
