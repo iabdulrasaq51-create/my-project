@@ -1,46 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>ToDo App</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0b0b" />
+  <title>ToDo App</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body class="min-h-screen bg-[#0b0b0b] text-white antialiased">
   <main class="mx-auto w-full max-w-md px-3 pb-16 pt-7 md:max-w-xl md:pt-14">
-     <header
-  class="flex h-[170px] items-center justify-between rounded-[36px] border border-[#3a4150] bg-[#030a14] pl-[15px] pr-[11px] md:h-[190px] md:pl-6 md:pr-3"
->
-  <div class="mt-8">
-    <h1 class="text-[36px] font-bold leading-none tracking-tight text-[#f6f4ff] md:text-[42px]">Todo Done</h1>
-    <p id="date" class="mt-5 pl-1 text-lg font-semibold tracking-wide text-[#f6f4ff]">12.09.2025</p>
-  </div>
 
-  <div class="flex h-[104px] w-[104px] shrink-0 items-center justify-center rounded-full bg-white md:h-[118px] md:w-[118px]">
-    <span id="counter" class="text-[36px] font-extrabold leading-none text-black md:text-[40px]">5/8</span>
-  </div>
-</header>
+    <!-- Header card -->
+    <header
+      class="flex h-[170px] items-center justify-between rounded-[36px] border border-[#3a4150] bg-[#030a14] pl-[15px] pr-[11px] md:h-[190px] md:pl-6 md:pr-3"
+    >
+      <div class="mt-8">
+        <h1 class="text-[36px] font-bold leading-none tracking-tight text-[#f6f4ff] md:text-[42px]">Todo Done</h1>
+        <p id="date" class="mt-5 pl-1 text-lg font-semibold tracking-wide text-[#f6f4ff]">12.09.2025</p>
+      </div>
 
-<div class="mt-[18px] flex items-center gap-3 px-1">
-  <input
-    id="task-input"
-    type="text"
-    maxlength="120"
-    autocomplete="off"
-    placeholder="input a new task"
-    class="h-9 min-w-0 flex-1 rounded-md border border-[#232323] bg-[#101010] px-3 text-sm text-white placeholder-[#3b3b3b] outline-none transition-colors focus:border-[#4a4a55]"
-  />
-  <button
-    id="add-btn"
-    type="button"
-    aria-label="Add task"
-    class="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full bg-white text-black transition-transform active:scale-90"
-  >
-    <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <path d="M12 5v14M5 12h14" />
-    </svg>
-  </button>
-</div>
-</main>
+      <div
+        class="flex h-[104px] w-[104px] shrink-0 items-center justify-center rounded-full bg-white md:h-[118px] md:w-[118px]"
+      >
+        <span id="counter" aria-live="polite" class="text-[36px] font-extrabold leading-none text-black md:text-[40px]">5/8</span>
+      </div>
+    </header>
+
+    <!-- Add task (Enter key and the + button both submit the form) -->
+    <form id="task-form" novalidate class="mt-[18px] flex items-center gap-3 px-1">
+      <input
+        id="task-input"
+        type="text"
+        maxlength="120"
+        autocomplete="off"
+        placeholder="input a new task"
+        aria-label="New task"
+        class="h-9 min-w-0 flex-1 rounded-md border border-[#232323] bg-[#101010] px-3 text-sm text-white placeholder-[#3b3b3b] outline-none transition-colors focus:border-[#4a4a55]"
+      />
+      <button
+        id="add-btn"
+        type="submit"
+        aria-label="Add task"
+        class="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full bg-white text-black transition-transform active:scale-90"
+      >
+        <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+      </button>
+    </form>
+
+    <!-- Task list (rendered by script.js) -->
+    <ul id="task-list" class="mt-[42px] space-y-2 px-1"></ul>
+    <p id="empty-state" class="mt-10 hidden text-center text-sm text-[#4a4a50]">No tasks yet. Add one above.</p>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
